@@ -9,17 +9,28 @@ app.get("/", (req, res) => {
     res.send("bem vindo a minha primeira API");
 });
 
-app.post('/usuario', async (req, res) => {
+app.post('/formulario', async (req, res) => {
     const nome = req.body.nome;
     const email = req.body.email
-    const telefone = req.body.telefone
+    const nivelEscolaridade = req.body.nivelEscolaridade
+    const curso = req.body.curso
+    const horario = req.body.horario
+    const descricao = req.body.descricao
+
+
+
     try {
-        const docRef = await firestore.addDoc(firestore.collection(db, 'usuarios'), {
+        const docRef = await firestore.addDoc(firestore.collection(db, 'formulario'), {
             nome: nome,
             email: email,
-            telefone: telefone,
+            nivelEscolaridade: nivelEscolaridade,
+            curso: curso,
+            horario: horario,
+            descricao: descricao,
+
+
         })
-        res.send("Usuario adicionado com sucesso:" + docRef.id);
+        res.send("Formulario cadastrado com sucesso:" + docRef.id);
     } catch (e) {
         console.log(e)
 
@@ -27,19 +38,19 @@ app.post('/usuario', async (req, res) => {
     }
 })
 
-app.get('/listarUsuarios', async (req,res)=>{
+app.get('/listarFormulario', async (req,res)=>{
     try {
-        const usuarios = await firestore.getDocs(firestore.collection(db, 'usuarios'))
+        const formularios = await firestore.getDocs(firestore.collection(db, 'formulario'))
 
-    const usuarioslista = usuarios.docs.map((doc) => ({
+    const formularioLista = formularios.docs.map((doc) => ({
         id: doc.id,
 ...doc.data(),
     })) 
-    res.send(usuarioslista)
+    res.send(formularioLista)
     } catch (e) {
-        console.log("Erro ao listar usuario: " + e)
+        console.log("Erro ao listar formularios: " + e)
 
-        res.status(500).send("Erro ao listar usuarios: " + e) 
+        res.status(500).send("Erro ao listar formularios: " + e) 
     } 
 })
 
@@ -76,8 +87,5 @@ app.delete('/deletarUsuario/:id', async(req, res) =>{
 app.listen(3000, function () {
     console.log("serviço rodando em http://localhost:3000")
 });
-
-
-
 
 
