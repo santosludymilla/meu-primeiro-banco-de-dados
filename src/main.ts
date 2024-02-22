@@ -65,33 +65,33 @@ app.get('/listarFormulario', async (req, res) => {
     }
 })
 
-app.put('/atualizarUsuario/:id', async (req, res) => {
+app.put('/atualizarFormulario/:id', async (req, res) => {
     const id = req.params.id
     const nome = req.body.nome
 
     try {
-        await firestore.updateDoc(firestore.doc(db, 'usuarios', id), {
+        await firestore.updateDoc(firestore.doc(db, 'formulario', id), {
             nome: nome,
         })
-        res.send('usuario atualizado com sucesso!')
+        res.send('formulario atualizado com sucesso!')
     } catch (e) {
-        console.log('Erro ao localizar usuario: ' + e)
+        console.log('Erro ao localizar formulario: ' + e)
 
-        res.status(500).send('Erro ao atualizar ao usuario: ' + e)
+        res.status(500).send('Erro ao atualizar ao formulario: ' + e)
     }
 });
 
-app.delete('/deletarUsuario/:id', async (req, res) => {
+app.delete('/deletarFormulario/:id', async (req, res) => {
     const id = req.params.id
 
     try {
-        await firestore.deleteDoc(firestore.doc(db, 'usuarios', id))
+        await firestore.deleteDoc(firestore.doc(db, 'formulario', id))
 
-        res.send('Usuario deletado com sucesso!')
+        res.send('formulario deletado com sucesso!')
     } catch (e) {
-        console.log('Erro ao deletar usuario:' + e)
+        console.log('Erro ao deletar formulario:' + e)
 
-        res.status(500).send('Erro ao deletar usuario:' + e)
+        res.status(500).send('Erro ao deletar formulario:' + e)
     }
 })
 
